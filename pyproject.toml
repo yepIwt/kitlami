@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "kitlami"
+version = "0.1.0"
+description = ""
+authors = ["yepIwt <ReetRay@protonmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+alembic = "^1.11.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
