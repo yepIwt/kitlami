@@ -47,3 +47,33 @@ class BadRequestError(ApiException):
 
 class ValidationError(ApiException):
     status_code = 400
+
+
+class UnauthorizedError(ApiException):
+    status_code = 401
+    message = "Unauthorized"
+
+
+class JWTExpiredSignatureError(ApiException):
+    status_code = 426
+    message = "Token expired"
+
+
+class JWTDecodeError(ApiException):
+    status_code = 401
+    message = "Token decode error"
+
+
+class UserNotFoundError(ApiException):
+    status_code = 400
+    message = "User not found"
+
+
+class UserAlreadyRegistered(ApiException):
+    status_code = 400
+    message = "User already registered"
+
+
+class PasswordMatchError(ApiException):
+    status_code = 400
+    message = "Passwords did not match"
