@@ -25,7 +25,9 @@ from .views import (
 
 class AuthorizationController(ApiController):
     @post("/auth/refresh-token")
-    async def refresh_token(self, body: TokenRequestView) -> Response[TokenResponseView]:
+    async def refresh_token(
+        self, body: TokenRequestView
+    ) -> Response[TokenResponseView]:
         token = decode_token(body.refresh_token)
         async with Transaction():
             user = await User.get_by_id(token.sub)
@@ -86,7 +88,9 @@ class AuthorizationController(ApiController):
 
     @auth(User.UserRole.USER)
     @patch("/profile")
-    async def edit_profile(self, token_user: Identity, body: UpdateProfileView) -> Response[UserProfileView]:
+    async def edit_profile(
+        self, token_user: Identity, body: UpdateProfileView
+    ) -> Response[UserProfileView]:
         async with Transaction():
             user = await User.get_by_id(token_user.claims["sub"])
 

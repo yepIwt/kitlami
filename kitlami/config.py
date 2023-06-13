@@ -47,7 +47,9 @@ class Settings(BaseSettings):
         )
 
     @validator("ALEMBIC_DATABASE_URL", pre=True)
-    def assemble_alembic_database_url(cls, v: str | None, values: Mapping[str, Any]) -> str:
+    def assemble_alembic_database_url(
+        cls, v: str | None, values: Mapping[str, Any]
+    ) -> str:
         if v and isinstance(v, str):
             return v
 
@@ -63,7 +65,9 @@ class Settings(BaseSettings):
         )
 
     @validator("TEST_DATABASE_URL", pre=True)
-    def assemble_test_postgres_url(cls, v: str | None, values: Mapping[str, Any]) -> str:
+    def assemble_test_postgres_url(
+        cls, v: str | None, values: Mapping[str, Any]
+    ) -> str:
         if not values.get("POSTGRES_TEST_DATABASE"):
             return ""
         if v and isinstance(v, str):

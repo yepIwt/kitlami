@@ -14,7 +14,11 @@ from kitlami.app.auth.views import (
 )
 from kitlami.auth.hash import encode_jwt
 from kitlami.config import settings
-from kitlami.exceptions import JWTDecodeError, JWTExpiredSignatureError, UnauthorizedError
+from kitlami.exceptions import (
+    JWTDecodeError,
+    JWTExpiredSignatureError,
+    UnauthorizedError,
+)
 
 
 class AuthHandler(AuthenticationHandler):
@@ -26,9 +30,14 @@ class AuthHandler(AuthenticationHandler):
         if header_value:
             token = header_value.decode().split()[-1]
             decoded_data = jwt.decode(
-                token, settings.JWT_SECRET, algorithms=[settings.JWT_ALG], options={"verify_signature": True}
+                token,
+                settings.JWT_SECRET,
+                algorithms=[settings.JWT_ALG],
+                options={"verify_signature": True},
             )
-            context.identity = Identity(claims=decoded_data, authentication_mode="access_token")
+            context.identity = Identity(
+                claims=decoded_data, authentication_mode="access_token"
+            )
         else:
             context.identity = None
         return context.identity
@@ -45,7 +54,9 @@ def get_exp_time(token_type: TokenType) -> int:
     return int(now.timestamp())
 
 
-def generate_tokens(sub: str, email: str, first_name: str | None = None, last_name: str | None = None) -> dict:
+def generate_tokens(
+    sub: str, email: str, first_name: str | None = None, last_name: str | None = None
+) -> dict:
     access_token_view = AccessTokenView(
         sub=sub,
         exp=get_exp_time(token_type=TokenType.ACCESS),
@@ -71,7 +82,10 @@ def generate_tokens(sub: str, email: str, first_name: str | None = None, last_na
 def decode_token(token: str) -> RefreshTokenView:
     try:
         payload = jwt.decode(
-            token, settings.JWT_SECRET, algorithms=[settings.JWT_ALG], options={"verify_signature": True}
+            token,
+            settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALG],
+            options={"verify_signature": True},
         )
         if not payload:
             raise UnauthorizedError

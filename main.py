@@ -41,14 +41,22 @@ async def uvicorn_base_exception_handler(self, request: Request, exc: Exception)
 
 
 @app.exception_handler(exceptions.ApiException)
-async def unicorn_api_exception_handler(self, request: Request, exc: exceptions.ApiException):
+async def unicorn_api_exception_handler(
+    self, request: Request, exc: exceptions.ApiException
+):
     logger.debug(exc.message)
 
-    return json(MyResponse(code=exc.status_code, message=exc.message, exception_class=exc._type()).dict())
+    return json(
+        MyResponse(
+            code=exc.status_code, message=exc.message, exception_class=exc._type()
+        ).dict()
+    )
 
 
 @app.exception_handler(UnauthorizedError)
-async def guardpost_api_exception_handler(self, request: Request, exc: UnauthorizedError):
+async def guardpost_api_exception_handler(
+    self, request: Request, exc: UnauthorizedError
+):
     logger.debug(exc)
     error = exceptions.UnauthorizedError()
     return json(

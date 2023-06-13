@@ -35,7 +35,13 @@ class User(BaseModel):
         return result.scalars().first()
 
     @classmethod
-    async def update(cls, user_id: uuid.UUID, first_name: str = None, last_name: str = None, picture_url: str = None):
+    async def update(
+        cls,
+        user_id: uuid.UUID,
+        first_name: str = None,
+        last_name: str = None,
+        picture_url: str = None,
+    ):
         query = (
             sa.update(cls)
             .where(cls.id == user_id)
@@ -48,7 +54,9 @@ class User(BaseModel):
         await db_session.get().execute(query)
 
     @classmethod
-    async def get_by_email(cls, email: str) -> Self | None:  # TODO: Write function get for BaseModel with 404 error
+    async def get_by_email(
+        cls, email: str
+    ) -> Self | None:  # TODO: Write function get for BaseModel with 404 error
         query = sa.select(User).where(User.email == email)
         result = (await db_session.get().execute(query)).scalars().first()
         return result

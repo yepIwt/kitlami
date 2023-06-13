@@ -23,7 +23,11 @@ class ApiException(Exception):
         return self.__class__.__name__
 
     def to_json(self) -> Mapping:
-        return {"code": self.status_code, "message": self.message, "payload": self.payload}
+        return {
+            "code": self.status_code,
+            "message": self.message,
+            "payload": self.payload,
+        }
 
 
 class ServerError(ApiException):

@@ -10,7 +10,9 @@ test_engine = create_async_engine(settings.TEST_DATABASE_URL, echo=True, future=
 Base = declarative_base()
 
 session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-test_session_maker = sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=False)
+test_session_maker = sessionmaker(
+    test_engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 class SessionMaker:
